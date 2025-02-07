@@ -4,6 +4,8 @@ from functions.writeDocs import write_docs
 from functions.cloneRepo import clone_repo
 from functions.parseRepo import parse_repo
 import os
+from functions.add_embeddings import add_pdf_to_vector_store
+from functions.initialize_vector_store import initialize_vector_store
 
 # Page configuration
 st.set_page_config(page_title="DevScribe", layout="wide")
@@ -11,6 +13,18 @@ st.set_page_config(page_title="DevScribe", layout="wide")
 st.image('design_resources/logo-white.svg', width=400)
 
 st.write("")
+
+pdf_vector_store = initialize_vector_store("devscribe-pdfs")
+repo_vector_store = initialize_vector_store("devscribe-repos")
+
+pdf_file = st.file_uploader("Upload a PDF", type=['pdf'])
+pdf_submit = st.button('Submit')
+
+if pdf_file and pdf_submit:
+    vector_store = add_pdf_to_vector_store(pdf_file)
+    st.write(vector_store)
+
+
 
 # Initialize session state for target_repo
 if 'target_repo' not in st.session_state:
