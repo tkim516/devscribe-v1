@@ -20,7 +20,7 @@ if 'target_repo' not in st.session_state:
 with st.form("input_form"):
     target_repo = st.text_input('Target Repo', value='https://github.com/tkim516/ml_homerun_predictor')
     
-    file_types = st.multiselect('File Types', ['py', 'ipynb', 'java', 'js', 'html', 'css', 'sql', 'json', 'xml', 'yaml', 'md', 'txt'])
+    file_types = st.multiselect('File Types', ['py', 'ipynb', 'java', 'js', 'ts', 'html', 'css', 'sql', 'json', 'xml', 'yaml', 'md', 'txt'])
 
     prompt_instructions = st.text_area('Input Prompt', value='Include information about potential improvements to the codebase.')
     
@@ -46,5 +46,6 @@ if st.session_state['target_repo']:
 
         response = write_docs(context, prompt_instructions)
         st.write(response.content)
+        st.write(response)
     st.header('Target Repo')
     st.write(st.session_state['target_repo'])
