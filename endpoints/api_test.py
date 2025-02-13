@@ -4,11 +4,35 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+API_KEY = ""
+userInput = ""
+template = ""
+U_ID = 0
+
+# Function to wait for Frontend request 
+@app.route('/api/data', methods=['POST'])
+def receive_data():
+    global userInput
+    data = request.json  # Get JSON payload from the request
+    userInput = data.get("userInput")
+    print("Received POST input:", userInput)
+    return jsonify({"message": "Data received successfully!", "receivedData": data})
+
+
 @app.route('/', methods=['GET'])
 def hello_world():
+    print(userInput)
+
+
+    # perform logic to use userInput variable as input to llms with your prompt also added on top to instruct the llm what to do with 
+    # the user input
+
     return jsonify({
         'message': 
-        '''# Home Run Predictor Documentation
+        f'''# Home Run Predictor Documentation
+
+            {userInput}
+
 
             ## Overview
 
